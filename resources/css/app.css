@@ -1,0 +1,2397 @@
+/* ====================================================================
+   ZYNC - ESTILOS PRINCIPALES
+   ====================================================================
+   Descripción: Estilos globales de la aplicación
+   Autor: Equipo de desarrollo
+   Fecha: 2025
+   ==================================================================== */
+
+/* ====================================================================
+   1. IMPORTS Y TAILWIND
+   ==================================================================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ====================================================================
+   1.1 RESET DE EFECTOS NO DESEADOS
+   ==================================================================== */
+/* Eliminar efecto blanco al hacer tap en dispositivos móviles */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Eliminar outline blanco al hacer focus en botones y enlaces */
+button:focus,
+a:focus,
+button:active,
+a:active {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ====================================================================
+   2. VARIABLES CSS GLOBALES
+   ==================================================================== */
+:root {
+    --colorPrincipal: #056599fc;
+    --colortTxt: #4d4a48;
+    --colorSecundario: #ff7e00;
+    --colorSecundarioPalido: #ffcc99;
+    --blackTransparent: #000000b2;
+
+    /* Variables de tema claro */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-tertiary: #9ca3af;
+    --border-color: #e5e7eb;
+    --border-hover: #d1d5db;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.space-y-6 {
+    margin-top: 24px !important;
+}
+.space-y-5 {margin-top: 20px !important;} 
+.space-y-7 {margin-top: 28px !important;} 
+.colorPrincipal {
+    color: var(--colorPrincipal) !important;
+    fill: var(--colorPrincipal) !important;
+}
+
+.p-inputtext,
+.p-component,
+input.w-full,
+select,
+.modalSelect,
+textarea.w-full,
+input.w-full.px-3.py-2\.5.bg-gray-50.dark\:bg-gray-900.border.border-gray-200.dark\:border-gray-600.rounded-xl.text-sm.text-gray-700.dark\:text-gray-200.placeholder-gray-400.focus\:outline-none.focus\:ring-2.focus\:ring-indigo-500\/40.focus\:border-indigo-400.transition-colors {
+    background-color: #f3fafddb !important;
+    border: solid 1px color-mix(in srgb, var(--colorPrincipal) 50%, transparent) !important;
+    border-radius: 5px;
+    box-sizing: border-box !important;
+    min-height: 42px;
+    color: #353538;
+    transition: box-shadow 0.2s linear, border-color 0.25s ease-out;
+    font-size: 14px;
+}
+
+.flex.flex-wrap.items-center.gap-0\.5.px-2.py-1\.5.border-b.border-gray-100.dark\:border-gray-700.bg-gray-50.dark\:bg-gray-800 {
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--colorPrincipal) 50%, transparent) !important;
+}
+/* ====================================================================
+   2.1 VARIABLES DE MODO OSCURO
+   ==================================================================== */
+.dark {
+    --colorPrincipal: #03476bfc;
+    --colortTxt: #e5e7eb;
+    --colorSecundario: #ff7e00;
+    --colorSecundarioPalido: #fbbf24;
+    --blackTransparent: #ffffffb2;
+
+    /* Variables de tema oscuro */
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border-color: #374151;
+    --border-hover: #4b5563;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* ====================================================================
+   3. CLASES UTILITARIAS GLOBALES
+   ==================================================================== */
+
+/* ========================
+   3.1 ESTILOS GLOBALES MODO OSCURO
+   ======================== */
+.dark body {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Fondos */
+.dark .bg-gray-100 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark .bg-white {
+    background-color: var(--bg-primary) !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark .bg-gray-200 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-gray-700 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-gray-800 {
+    background-color: #1f2937 !important;
+}
+
+.dark .bg-gray-900 {
+    background-color: #111827 !important;
+}
+
+/* Textos */
+.dark .text-gray-700 {
+    color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-600 {
+    color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-800 {
+    color: var(--text-primary) !important;
+}
+
+.dark .text-gray-900 {
+    color: var(--text-primary) !important;
+}
+
+.dark .text-gray-500 {
+    color: #9ca3af !important;
+}
+
+.dark .text-gray-400 {
+    color: #d1d5db !important;
+}
+
+.dark .text-gray-300 {
+    color: #d1d5db !important;
+}
+
+.dark .text-gray-200 {
+    color: #e5e7eb !important;
+}
+
+.dark .text-gray-100 {
+    color: #f3f4f6 !important;
+}
+
+/* Bordes */
+.dark .border-gray-200 {
+    border-color: #374151 !important;
+}
+
+.dark .border-gray-300 {
+    border-color: #4b5563 !important;
+}
+
+.dark .border-gray-400 {
+    border-color: #6b7280 !important;
+}
+
+.dark .border-gray-600 {
+    border-color: #4b5563 !important;
+}
+
+.dark .border-gray-700 {
+    border-color: #374151 !important;
+}
+
+.dark .border-gray-800 {
+    border-color: #1f2937 !important;
+}
+
+/* Dividores */
+.dark .divide-gray-200 > * + * {
+    border-color: #374151 !important;
+}
+
+.dark .divide-gray-300 > * + * {
+    border-color: #4b5563 !important;
+}
+
+/* Rings (focus) */
+.dark .ring-gray-300 {
+    --tw-ring-color: #4b5563 !important;
+}
+
+.dark .ring-gray-500 {
+    --tw-ring-color: #6b7280 !important;
+}
+
+/* Placeholders */
+.dark .placeholder-gray-400::placeholder {
+    color: #9ca3af !important;
+}
+
+.dark .placeholder-gray-500::placeholder {
+    color: #6b7280 !important;
+}
+
+/* Inputs y Forms */
+.dark input[type='text'],
+.dark input[type='email'],
+.dark input[type='password'],
+.dark input[type='number'],
+.dark input[type='tel'],
+.dark input[type='url'],
+.dark input[type='search'],
+.dark input[type='date'],
+.dark input[type='time'],
+.dark input[type='datetime-local'],
+.dark textarea,
+.dark select {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f9fafb !important;
+}
+
+.dark input[type='text']:focus,
+.dark input[type='email']:focus,
+.dark input[type='password']:focus,
+.dark input[type='number']:focus,
+.dark input[type='tel']:focus,
+.dark input[type='url']:focus,
+.dark input[type='search']:focus,
+.dark input[type='date']:focus,
+.dark input[type='time']:focus,
+.dark input[type='datetime-local']:focus,
+.dark textarea:focus,
+.dark select:focus {
+    background-color: #1f2937 !important;
+    border-color: var(--colorPrincipal) !important;
+    --tw-ring-color: var(--colorPrincipal) !important;
+}
+
+/* Botones */
+.bg-indigo-600 {
+    background-color: var(--colorPrincipal) !important;
+}
+
+.dark .bg-indigo-700 {
+    background-color: #4141bbfc !important;
+}
+
+.dark .text-indigo-600 {
+    color: #079DED !important;
+}
+.gap-0    { gap: 0px; }
+.gap-px   { gap: 1px; }
+
+.gap-0\.5 { gap: 0.125rem; } /* 2px */
+.gap-1    { gap: 0.25rem; }  /* 4px */
+.gap-1\.5 { gap: 0.375rem; } /* 6px */
+.gap-2    { gap: 0.5rem; }   /* 8px */
+.gap-2\.5 { gap: 0.625rem; } /* 10px */
+.gap-3    { gap: 0.75rem; }  /* 12px */
+.gap-3\.5 { gap: 0.875rem; } /* 14px */
+.gap-4    { gap: 1rem; }     /* 16px */
+.gap-5    { gap: 1.25rem; }  /* 20px */
+.gap-6    { gap: 1.5rem; }   /* 24px */
+.gap-7    { gap: 1.75rem; }  /* 28px */
+.gap-8    { gap: 2rem; }     /* 32px */
+.gap-9    { gap: 2.25rem; }  /* 36px */
+.gap-10   { gap: 2.5rem; }   /* 40px */
+.gap-11   { gap: 2.75rem; }  /* 44px */
+.gap-12   { gap: 3rem; }     /* 48px */
+
+.gap-14   { gap: 3.5rem; }   /* 56px */
+.gap-16   { gap: 4rem; }     /* 64px */
+.gap-20   { gap: 5rem; }     /* 80px */
+.gap-24   { gap: 6rem; }     /* 96px */
+.gap-28   { gap: 7rem; }     /* 112px */
+.gap-32   { gap: 8rem; }     /* 128px */
+.gap-36   { gap: 9rem; }     /* 144px */
+.gap-40   { gap: 10rem; }    /* 160px */
+.gap-44   { gap: 11rem; }    /* 176px */
+.gap-48   { gap: 12rem; }    /* 192px */
+.gap-52   { gap: 13rem; }    /* 208px */
+.gap-56   { gap: 14rem; }    /* 224px */
+.gap-60   { gap: 15rem; }    /* 240px */
+.gap-64   { gap: 16rem; }    /* 256px */
+.gap-72   { gap: 18rem; }    /* 288px */
+.gap-80   { gap: 20rem; }    /* 320px */
+.gap-96   { gap: 24rem; }    /* 384px */
+.dark .text-indigo-400 {
+    color: #5AC2FA !important;
+}
+
+.dark .border-indigo-600 {
+    border-color: var(--colorPrincipal) !important;
+}
+
+/* Hover States */
+.dark .hover\:bg-gray-50:hover {
+    background-color: #374151 !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+    background-color: #4b5563 !important;
+}
+
+.dark .hover\:bg-gray-700:hover {
+    background-color: #4b5563 !important;
+}
+
+.dark .hover\:bg-gray-800:hover {
+    background-color: #374151 !important;
+}
+
+.dark .hover\:text-gray-900:hover {
+    color: #f9fafb !important;
+}
+
+.dark .hover\:text-gray-700:hover {
+    color: #e5e7eb !important;
+}
+
+.dark .hover\:border-gray-400:hover {
+    border-color: #6b7280 !important;
+}
+
+/* Shadows */
+.dark .shadow-sm {
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.dark .shadow-md {
+    box-shadow: var(--shadow-md) !important;
+}
+
+.dark .shadow-lg {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.dark .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+        0 8px 10px -6px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Cards y Containers */
+.dark .divide-y > * + * {
+    border-color: #374151 !important;
+}
+
+/* Links */
+.dark a:not([class*='btn']):not([class*='button']) {
+    color: #5AC2FA;
+}
+
+.dark a:not([class*='btn']):not([class*='button']):hover {
+    color: #B1D9EF;
+}
+
+/* Tables */
+.dark table {
+    background-color: var(--bg-primary);
+}
+
+.dark thead {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+.dark tbody tr {
+    border-color: var(--border-color);
+}
+
+.dark tbody tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Modals */
+.dark .modal-content {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+/* Dropdowns */
+.dark .dropdown-menu {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+}
+
+.dark .dropdown-item:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Alerts */
+.dark .alert {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Badges */
+.dark .badge {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Progress bars */
+.dark .progress {
+    background-color: var(--bg-tertiary);
+}
+
+/* Tooltips */
+.dark .tooltip {
+    background-color: #1f2937;
+    color: #f9fafb;
+}
+
+/* Disabled states */
+.dark .disabled,
+.dark :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Focus visible */
+.dark *:focus-visible {
+    outline: 2px solid var(--colorPrincipal);
+    outline-offset: 2px;
+}
+
+.dark .border-gray-200 {
+    border-color: var(--border-color) !important;
+}
+
+.dark .border-gray-300 {
+    border-color: var(--border-hover) !important;
+}
+
+.dark .shadow-sm {
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.dark .shadow-md {
+    box-shadow: var(--shadow-md) !important;
+}
+
+.dark .shadow-lg {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+/* Inputs en modo oscuro */
+.dark .modalInputs input,
+.dark .modalInputs textarea,
+.dark .modalInputs select,
+.dark .inputs {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark .modalSelect {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Tablas en modo oscuro */
+.dark .radiusTabla,
+.dark .rounded-xl,
+.dark table {
+    background-color: var(--bg-primary) !important;
+}
+
+.dark th {
+    background-color: var(--colorPrincipal) !important;
+}
+
+.dark td {
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark thead {
+    background-color: var(--colorPrincipal) !important;
+}
+
+.dark tbody {
+    background-color: var(--bg-primary) !important;
+}
+
+.dark tbody tr {
+    background-color: var(--bg-primary) !important;
+}
+
+.dark tbody tr:nth-child(even) {
+    background-color: var(--bg-secondary);
+}
+
+.dark tbody tr:hover {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark .divide-gray-200 > * + * {
+    border-color: var(--border-color) !important;
+}
+
+.dark .divide-gray-100 > * + * {
+    border-color: var(--border-color) !important;
+}
+
+.dark .border-gray-100 {
+    border-color: var(--border-color) !important;
+}
+
+.dark .border-gray-200 {
+    border-color: var(--border-color) !important;
+}
+
+/* Filas alternas en modo oscuro */
+.dark .bg-gray-50\/50 {
+    background-color: rgba(31, 41, 55, 0.5) !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dark .hover\:bg-indigo-50\/50:hover {
+    background-color: rgba(5, 101, 153, 0.1) !important;
+}
+
+/* Modales en modo oscuro */
+.dark .modaleStyle > div {
+    background-color: var(--bg-primary) !important;
+}
+
+/* Cards y contenedores */
+.dark .rellenoInternas,
+.dark .relleno .rellenoInternas {
+    background-color: var(--bg-primary) !important;
+}
+.headPrymari thead,
+.headPrymari thead tr,
+.headPrymari thead tr th {
+    background: var(--colorPrincipal) !important;
+    color: #fff !important;
+    font-size: 14px !important;
+}
+table thead,
+table thead tr,
+table thead tr th {
+    background: var(--colorPrincipal) !important;
+    color: #fff !important;
+}
+/* Badges y estados en modo oscuro */
+.dark .bg-green-100 {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+.dark .bg-green-50 {
+    background-color: rgba(34, 197, 94, 0.15) !important;
+}
+
+.dark .text-green-800 {
+    color: rgb(134, 239, 172) !important;
+}
+
+.dark .text-green-700 {
+    color: rgb(134, 239, 172) !important;
+}
+
+.dark .text-green-600 {
+    color: rgb(134, 239, 172) !important;
+}
+
+.dark .text-green-500 {
+    color: rgb(74, 222, 128) !important;
+}
+
+.dark .bg-green-500 {
+    background-color: rgb(34, 197, 94) !important;
+}
+
+.dark .hover\:bg-green-600:hover {
+    background-color: rgb(22, 163, 74) !important;
+}
+
+.dark .hover\:text-green-700:hover {
+    color: rgb(134, 239, 172) !important;
+}
+
+.dark .hover\:bg-green-50:hover {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+/* Colores rojos en modo oscuro */
+.dark .bg-red-50 {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+.dark .bg-red-100 {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.dark .bg-red-500 {
+    background-color: rgb(239, 68, 68) !important;
+}
+
+.dark .bg-red-600 {
+    background-color: rgb(220, 38, 38) !important;
+}
+
+.dark .text-red-500 {
+    color: rgb(248, 113, 113) !important;
+}
+
+.dark .text-red-600 {
+    color: rgb(252, 165, 165) !important;
+}
+
+.dark .text-red-700 {
+    color: rgb(252, 165, 165) !important;
+}
+
+.dark .text-red-800 {
+    color: rgb(252, 165, 165) !important;
+}
+
+.dark .border-red-100 {
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.dark .border-red-200 {
+    border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+.dark .border-red-300 {
+    border-color: rgba(239, 68, 68, 0.45) !important;
+}
+
+.dark .border-red-700 {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.dark .hover\:border-red-200:hover {
+    border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+.dark .hover\:bg-red-700:hover {
+    background-color: rgb(185, 28, 28) !important;
+}
+
+.dark .focus\:ring-red-500:focus {
+    --tw-ring-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+/* Colores amarillos en modo oscuro */
+.dark .bg-yellow-50 {
+    background-color: rgba(234, 179, 8, 0.15) !important;
+}
+
+.dark .bg-yellow-100 {
+    background-color: rgba(234, 179, 8, 0.2) !important;
+}
+
+.dark .bg-yellow-500 {
+    background-color: rgb(234, 179, 8) !important;
+}
+
+.dark .bg-yellow-600 {
+    background-color: rgb(202, 138, 4) !important;
+}
+
+.dark .text-yellow-500 {
+    color: rgb(250, 204, 21) !important;
+}
+
+.dark .text-yellow-600 {
+    color: rgb(250, 204, 21) !important;
+}
+
+.dark .text-yellow-700 {
+    color: rgb(250, 204, 21) !important;
+}
+
+.dark .text-yellow-800 {
+    color: rgb(253, 224, 71) !important;
+}
+
+.dark .border-yellow-100 {
+    border-color: rgba(234, 179, 8, 0.25) !important;
+}
+
+.dark .border-yellow-200 {
+    border-color: rgba(234, 179, 8, 0.35) !important;
+}
+
+.dark .border-yellow-300 {
+    border-color: rgba(234, 179, 8, 0.45) !important;
+}
+
+.dark .hover\:border-yellow-200:hover {
+    border-color: rgba(234, 179, 8, 0.4) !important;
+}
+
+.dark .hover\:bg-yellow-700:hover {
+    background-color: rgb(161, 98, 7) !important;
+}
+
+.dark .focus\:ring-yellow-500:focus {
+    --tw-ring-color: rgba(234, 179, 8, 0.5) !important;
+}
+
+/* Colores naranjas en modo oscuro */
+.dark .bg-orange-50 {
+    background-color: rgba(249, 115, 22, 0.15) !important;
+}
+
+.dark .bg-orange-100 {
+    background-color: rgba(249, 115, 22, 0.2) !important;
+}
+
+.dark .bg-orange-500 {
+    background-color: rgb(249, 115, 22) !important;
+}
+
+.dark .bg-orange-600 {
+    background-color: rgb(234, 88, 12) !important;
+}
+
+.dark .text-orange-600 {
+    color: rgb(251, 146, 60) !important;
+}
+
+.dark .text-orange-700 {
+    color: rgb(251, 146, 60) !important;
+}
+
+.dark .border-orange-100 {
+    border-color: rgba(249, 115, 22, 0.25) !important;
+}
+
+.dark .border-orange-200 {
+    border-color: rgba(249, 115, 22, 0.35) !important;
+}
+
+.dark .hover\:border-orange-200:hover {
+    border-color: rgba(249, 115, 22, 0.4) !important;
+}
+
+/* Colores amber en modo oscuro */
+.dark .bg-amber-50 {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+.dark .bg-amber-100 {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+.dark .text-amber-600 {
+    color: rgb(251, 191, 36) !important;
+}
+
+.dark .text-amber-700 {
+    color: rgb(251, 191, 36) !important;
+}
+
+.dark .border-amber-100 {
+    border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+.dark .border-amber-200 {
+    border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+.dark .hover\:border-amber-200:hover {
+    border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Colores rosas en modo oscuro */
+.dark .bg-pink-50 {
+    background-color: rgba(236, 72, 153, 0.15) !important;
+}
+
+.dark .bg-pink-100 {
+    background-color: rgba(236, 72, 153, 0.2) !important;
+}
+
+.dark .text-pink-600 {
+    color: rgb(244, 114, 182) !important;
+}
+
+.dark .text-pink-700 {
+    color: rgb(244, 114, 182) !important;
+}
+
+.dark .border-pink-100 {
+    border-color: rgba(236, 72, 153, 0.25) !important;
+}
+
+.dark .border-pink-200 {
+    border-color: rgba(236, 72, 153, 0.35) !important;
+}
+
+.dark .hover\:border-pink-200:hover {
+    border-color: rgba(236, 72, 153, 0.4) !important;
+}
+
+.dark .bg-blue-50 {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.dark .bg-blue-100 {
+    background-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+.dark .bg-blue-400 {
+    background-color: rgba(96, 165, 250, 0.4) !important;
+}
+
+.dark .bg-blue-500 {
+    background-color: rgb(59, 130, 246) !important;
+}
+
+.dark .bg-blue-600 {
+    background-color: rgb(37, 99, 235) !important;
+}
+
+.dark .text-blue-500 {
+    color: rgb(96, 165, 250) !important;
+}
+
+.dark .text-blue-600 {
+    color: rgb(147, 197, 253) !important;
+}
+
+.dark .text-blue-700 {
+    color: rgb(147, 197, 253) !important;
+}
+
+.dark .text-blue-800 {
+    color: rgb(147, 197, 253) !important;
+}
+
+.dark .hover\:bg-blue-50:hover {
+    background-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+.dark .hover\:bg-blue-100:hover {
+    background-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+.dark .hover\:bg-blue-700:hover {
+    background-color: rgb(29, 78, 216) !important;
+}
+
+.dark .hover\:text-blue-700:hover {
+    color: rgb(147, 197, 253) !important;
+}
+
+.dark .hover\:text-blue-800:hover {
+    color: rgb(147, 197, 253) !important;
+}
+
+.dark .hover\:border-blue-200:hover {
+    border-color: rgba(59, 130, 246, 0.35) !important;
+}
+
+.dark .hover\:border-blue-300:hover {
+    border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+.dark .bg-indigo-50 {
+    background-color: rgba(6, 125, 190, 0.2) !important;
+}
+
+.dark .text-indigo-700 {
+    color: rgb(90, 194, 250) !important;
+}
+
+.dark .bg-purple-50 {
+    background-color: rgba(168, 85, 247, 0.2) !important;
+}
+
+.dark .bg-purple-100 {
+    background-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+.dark .text-purple-600 {
+    color: rgb(216, 180, 254) !important;
+}
+
+.dark .text-purple-700 {
+    color: rgb(216, 180, 254) !important;
+}
+
+.dark .border-purple-100 {
+    border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+.dark .border-purple-200 {
+    border-color: rgba(168, 85, 247, 0.3) !important;
+}
+
+.dark .hover\:border-purple-200:hover {
+    border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+.dark .from-purple-900\/20 {
+    --tw-gradient-from: rgba(88, 28, 135, 0.2) !important;
+    --tw-gradient-to: rgba(88, 28, 135, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-indigo-900\/20 {
+    --tw-gradient-to: rgba(3, 61, 93, 0.2) !important;
+}
+
+.dark .from-purple-900 {
+    --tw-gradient-from: rgba(88, 28, 135, 0.3) !important;
+    --tw-gradient-to: rgba(88, 28, 135, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-indigo-900 {
+    --tw-gradient-to: rgba(3, 61, 93, 0.3) !important;
+}
+
+.dark .border-blue-200 {
+    border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+.dark .border-blue-100 {
+    border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+.dark .border-blue-300 {
+    border-color: rgba(59, 130, 246, 0.45) !important;
+}
+
+.dark .border-blue-400 {
+    border-color: rgba(96, 165, 250, 0.4) !important;
+}
+
+.dark .focus\:ring-blue-500:focus {
+    --tw-ring-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.dark .focus\:border-blue-500:focus {
+    border-color: rgb(59, 130, 246) !important;
+}
+
+.dark .border-indigo-200 {
+    border-color: rgba(6, 125, 190, 0.3) !important;
+}
+
+.dark .border-purple-200 {
+    border-color: rgba(168, 85, 247, 0.3) !important;
+}
+
+.dark .border-purple-100 {
+    border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+.dark .border-green-100 {
+    border-color: rgba(34, 197, 94, 0.25) !important;
+}
+
+.dark .border-green-200 {
+    border-color: rgba(34, 197, 94, 0.35) !important;
+}
+
+.dark .border-green-300 {
+    border-color: rgba(34, 197, 94, 0.45) !important;
+}
+
+.dark .hover\:border-green-200:hover {
+    border-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+/* Badges de enlaces en modo oscuro */
+.dark .bg-teal-50 {
+    background-color: rgba(20, 184, 166, 0.2) !important;
+}
+
+.dark .text-teal-700 {
+    color: rgb(94, 234, 212) !important;
+}
+
+.dark .border-teal-200 {
+    border-color: rgba(20, 184, 166, 0.3) !important;
+}
+
+/* Badges de desktop en modo oscuro */
+.dark .bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+.dark .text-emerald-700 {
+    color: rgb(110, 231, 183) !important;
+}
+
+.dark .border-emerald-200 {
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Gradientes en modo oscuro */
+.dark .from-green-50 {
+    --tw-gradient-from: rgba(34, 197, 94, 0.15) !important;
+    --tw-gradient-to: rgba(34, 197, 94, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-emerald-50 {
+    --tw-gradient-to: rgba(16, 185, 129, 0.15) !important;
+}
+
+.dark .from-blue-50 {
+    --tw-gradient-from: rgba(59, 130, 246, 0.2) !important;
+    --tw-gradient-to: rgba(59, 130, 246, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-indigo-50 {
+    --tw-gradient-to: rgba(6, 125, 190, 0.2) !important;
+}
+
+.dark .from-yellow-50 {
+    --tw-gradient-from: rgba(234, 179, 8, 0.15) !important;
+    --tw-gradient-to: rgba(234, 179, 8, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-orange-50 {
+    --tw-gradient-to: rgba(249, 115, 22, 0.15) !important;
+}
+
+.dark .from-yellow-100 {
+    --tw-gradient-from: rgba(234, 179, 8, 0.2) !important;
+    --tw-gradient-to: rgba(234, 179, 8, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-orange-100 {
+    --tw-gradient-to: rgba(249, 115, 22, 0.2) !important;
+}
+
+.dark .from-red-50 {
+    --tw-gradient-from: rgba(239, 68, 68, 0.15) !important;
+    --tw-gradient-to: rgba(239, 68, 68, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-pink-50 {
+    --tw-gradient-to: rgba(236, 72, 153, 0.15) !important;
+}
+
+.dark .from-purple-50 {
+    --tw-gradient-from: rgba(168, 85, 247, 0.2) !important;
+    --tw-gradient-to: rgba(168, 85, 247, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-pink-50 {
+    --tw-gradient-to: rgba(236, 72, 153, 0.15) !important;
+}
+
+.dark .from-orange-50 {
+    --tw-gradient-from: rgba(249, 115, 22, 0.15) !important;
+    --tw-gradient-to: rgba(249, 115, 22, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-amber-50 {
+    --tw-gradient-to: rgba(245, 158, 11, 0.15) !important;
+}
+
+.dark .from-orange-600 {
+    --tw-gradient-from: rgb(234, 88, 12) !important;
+    --tw-gradient-to: rgba(234, 88, 12, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-red-600 {
+    --tw-gradient-to: rgb(220, 38, 38) !important;
+}
+
+.dark .from-gray-50 {
+    --tw-gradient-from: var(--bg-secondary) !important;
+    --tw-gradient-to: rgba(31, 41, 55, 0) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-slate-50 {
+    --tw-gradient-to: var(--bg-tertiary) !important;
+}
+
+/* Textos en modo oscuro */
+.dark .text-gray-400 {
+    color: #9ca3af !important;
+}
+
+.dark .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+/* Título principal en modo oscuro */
+.dark .tituloPag {
+    background: linear-gradient(135deg, #fffffffc 0%, #e1e1fffc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Contadores y badges info en modo oscuro */
+.dark .bg-gradient-to-r {
+    background: linear-gradient(
+        to right,
+        var(--bg-tertiary),
+        var(--bg-secondary)
+    ) !important;
+}
+
+.dark .text-indigo-600 {
+    color: rgb(90, 194, 250) !important;
+}
+
+.dark .text-blue-600 {
+    color: rgb(147, 197, 253) !important;
+}
+
+/* Tarjetas de reportes en modo oscuro */
+.dark .rounded-xl.border {
+    background-color: var(--bg-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark .border-gray-100 {
+    border-color: var(--border-color) !important;
+}
+
+.dark .bg-slate-800 {
+    background-color: var(--bg-tertiary) !important;
+}
+
+.dark .bg-gray-800 {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Headers y labels de secciones */
+.dark h4.text-gray-600,
+.dark .text-gray-600 {
+    color: var(--text-secondary) !important;
+}
+
+.dark h4.text-xs.font-medium {
+    color: var(--text-secondary) !important;
+    opacity: 0.9;
+}
+
+.dark .text-white {
+    color: var(--text-primary) !important;
+}
+
+.dark .text-slate-300 {
+    color: var(--text-secondary) !important;
+}
+
+.dark .text-slate-400 {
+    color: var(--text-tertiary) !important;
+}
+
+/* Footer de tarjetas */
+.dark .bg-gray-50.border-t {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Input de búsqueda en modo oscuro */
+.dark input[type='text'],
+.dark input[type='search'] {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.dark input::placeholder {
+    color: var(--text-tertiary) !important;
+}
+
+/* Iconos en modo oscuro */
+.dark svg {
+    color: currentColor;
+}
+
+/* Hover en tarjetas */
+.dark .hover\:shadow-lg:hover {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.dark .hover\:shadow-md:hover {
+    box-shadow: var(--shadow-md) !important;
+}
+
+.dark .hover\:border-gray-300:hover {
+    border-color: var(--border-hover) !important;
+}
+
+/* Tarjetas de reportes - hover states */
+.dark .rounded-xl.border.hover\:shadow-md:hover {
+    border-color: rgba(5, 101, 153, 0.3) !important;
+    box-shadow: 0 4px 12px 0 rgba(5, 101, 153, 0.15) !important;
+}
+
+/* ========================
+   3.2 CLASES UTILITARIAS ORIGINALES
+   ======================== */
+
+/* Botones de acción en modo oscuro */
+.dark .action-btn {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.dark .action-btn:not(:disabled):hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Sombras personalizadas en modo oscuro */
+.dark .shadow {
+    box-shadow: var(--shadow-md);
+}
+
+.dark .shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.dark .shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.dark .shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.dark .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+        0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Variante púrpura de botones en modo oscuro */
+.dark .bg-purple-600 {
+    background-color: rgb(147, 51, 234) !important;
+}
+
+.dark .hover\:bg-purple-700:hover {
+    background-color: rgb(126, 34, 206) !important;
+}
+
+.text-indigo-700,
+.tituloPag,
+.colorMorado {
+    color: var(--colorPrincipal);
+}
+
+.bgPrincipal {
+    background: var(--colorPrincipal);
+}
+
+.hover-bg-principal:hover {
+    background: var(--colorPrincipal) !important;
+}
+
+.bgSecundario {
+    background: #ebebeb;
+    color: #000;
+    padding: 5px 15px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.bgSecundario svg {
+    color: #000;
+}
+
+.bgNaranga {
+    background: var(--colorSecundarioPalido);
+}
+
+.bagroundSecundario {
+    background: var(--colorSecundario);
+}
+
+/* Transiciones globales */
+a,
+button {
+    transition: background-color 0.3s ease, opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Clases de espaciado */
+.sin-justify-center {
+    padding-left: 26px;
+}
+
+.pl-26 {
+    padding-left: 26px;
+}
+
+/* Igual sangría que los NavLink de primer nivel (.menuAbierto .linkMenu = 20px),
+   para cabeceras de grupo que son <button> y no heredan esa regla. */
+.pl-20 {
+    padding-left: 20px;
+}
+
+/* Sangría de los sub-ítems del sidebar (hijos de un grupo).
+   Debe ganarle a `.menuAbierto .linkMenu` (padding-left:20px, especificidad 0,2,0),
+   por eso se compone con .linkMenu y el contexto .menuAbierto → especificidad 0,3,0.
+   Solo afecta a los NavLink que además llevan la clase pl-44 (los sub-ítems). */
+.menuAbierto .linkMenu.pl-44 {
+    padding-left: 44px;
+}
+
+.p-m-10 {
+    padding: 13px;
+    margin-bottom: 10px;
+}
+
+.m-0 {
+    margin-bottom: 0 !important;
+}
+
+.mt-0 {
+    margin-top: 20px !important;
+}
+
+/* Clases de ancho */
+.width-50 {
+    width: 49%;
+}
+
+.width-49 > div {
+    width: 48%;
+}
+
+.radiusTabla,
+.rounded-xl {
+    border-radius: 0.6rem;
+}
+.rounded {
+    border-radius: 0.5rem;
+}
+/* .radiusTabla {
+    overflow: hidden;
+} */
+
+/* Botones de acción compactos */
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+    padding: 0.22rem 0.38rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+    transition: background-color 0.3s ease, opacity 0.3s ease,
+        box-shadow 0.3s ease;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    gap: 0.18rem;
+    position: relative;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+.action-btn svg {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.action-btn:not(:disabled):hover {
+    opacity: 0.9;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.action-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+}
+
+.action-btn:focus {
+    box-shadow: 0 0 0 2px #067DBE;
+}
+/* ====================================================================
+   4. SISTEMA DE NAVEGACIÓN Y MENÚ
+   ==================================================================== */
+
+/* ========================
+   4.1 CONTENEDOR GENERAL DEL MENÚ
+   ======================== */
+.customMenu * {
+    color: #fff;
+}
+
+.customMenu nav {
+    overflow: visible;
+}
+
+/* ========================
+   4.2 ESTADOS Y TRANSICIONES DEL SIDEBAR
+   ======================== */
+/* .customMenu ya no necesita position: relative porque el aside tiene position: fixed */
+
+.customMenu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.05) 100%
+    );
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ========================
+   4.3 ITEMS DEL MENÚ - ESTADOS BASE
+   ======================== */
+.customMenu span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.customMenu button,
+.customMenu a {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Efecto de brillo al hover */
+.customMenu button::before,
+.customMenu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.customMenu button:hover::before,
+.customMenu a:hover::before {
+    left: 100%;
+}
+
+/* ========================
+   4.4 MENÚ ACTIVADO - ITEM SELECCIONADO
+   ======================== */
+.menuActivado {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 126, 0, 0.2) 0%,
+        rgba(255, 126, 0, 0.1) 100%
+    );
+    position: relative;
+    border-left: 1px solid rgba(255, 126, 0, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.menuActivado::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.menuActivado * {
+    color: #fff;
+}
+
+/* ========================
+   4.5 ESTADOS DEL MENÚ ABIERTO/CERRADO
+   ======================== */
+.menuAbierto .toolTip {
+    display: none !important;
+}
+
+.menuAbierto .linkMenu {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ========================
+   4.6 EFECTOS HOVER EN LINKS
+   ======================== */
+.linkMenu {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.linkMenu:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.linkMenu:hover .svgMenu,
+.menuActivado .svgMenu {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: filter 0.3s ease;
+}
+
+.linkMenu:active {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ========================
+   4.8 ICONOS SVG DEL MENÚ
+   ======================== */
+.svgMenu {
+    fill: #fff;
+    width: 40px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* ========================
+   4.9 SEPARADORES DECORATIVOS
+   ======================== */
+.separador {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 10%,
+        rgba(255, 255, 255, 0.35) 30%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.35) 70%,
+        rgba(255, 255, 255, 0.15) 90%,
+        transparent 100%
+    );
+    position: relative;
+    margin: 8px 0;
+}
+
+.separador::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+    );
+    filter: blur(0.5px);
+}
+
+.separador::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: separadorGlow 4s ease-in-out infinite;
+}
+
+@keyframes separadorGlow {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.separadorAdmin {
+    margin: 0 !important;
+}
+
+/* ========================
+   4.10 UTILIDADES Y TEXTOS
+   ======================== */
+.rollBar {
+    font-size: 11px;
+    display: block;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    top: -4px;
+    text-transform: capitalize;
+    letter-spacing: 0.05em;
+}
+
+/* ========================
+   4.11 SCROLLBAR PERSONALIZADO (OVERLAY SCROLLBARS)
+   ======================== */
+.menu-scroll > ul::-webkit-scrollbar {
+    display: none;
+}
+
+/* Estilos para contenedor de navegación con scroll */
+.customMenu nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.customMenu nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.customMenu nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.customMenu nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.customMenu nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* ====================================================================
+   5. SISTEMA DE AUTENTICACIÓN (LOGIN)
+   ==================================================================== */
+.appLogo {
+    width: auto;
+    max-width: 415px;
+    background: #fff;
+    background-color: #fff;
+    margin: 0;
+    padding: 2rem 2.5rem 1rem;
+    box-sizing: border-box;
+    border: solid 1px #ddd;
+    border-radius: 0.5em 0.5em 0 0;
+    border-bottom-width: 0;
+}
+
+.dark .appLogo {
+    background-color: #111827;
+}
+
+.appLogo img {
+    width: 100%;
+}
+
+.tituloPrincipal {
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    color: var(--colortTxt);
+    line-height: 1.05;
+    margin: 18px 0 33px;
+}
+
+.mt-6.w-full.overflow-hidden {
+    width: 100%;
+    max-width: 415px;
+    background-color: #fff;
+    margin: 0;
+    padding: 0 2.5rem 2.5rem;
+    box-sizing: border-box;
+    border: solid 1px #ddd;
+    border-radius: 0 0 0.5em 0.5em;
+    border-top-width: 0;
+}
+
+.boxBtnl {
+    margin-top: 35px;
+}
+
+.center {
+    text-align: center;
+}
+
+/* Botones del sistema de login */
+button.btnFull {
+    width: 100%;
+}
+
+button.btn {
+    background: var(--colorPrincipal);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-size: 20px;
+    padding: 19px;
+    letter-spacing: normal;
+    text-transform: none;
+    position: relative;
+}
+
+/* ====================================================================
+   6. SISTEMA DE FORMULARIOS Y INPUTS
+   ==================================================================== */
+form label.block {
+    color: var(--colorPrincipal);
+}
+.modalSelect {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f3fafddb !important;
+    /* border: solid 1px var(--colorPrincipal); */
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 42px;
+    color: #353538;
+    font-weight: 100;
+    font-family: inherit;
+    transition: box-shadow 0.2s linear, border-color 0.25s ease-out;
+    align-items: center;
+    padding: 0px 15px;
+    font-size: 14px;
+}
+/* .SpaceDate input {
+
+}*/
+.modalInputs input,
+.modalInputs textarea,
+.modalInputs select,
+.inputs {
+    display: block;
+    margin: 0;
+    padding: 0 1em 0;
+    background-color: #f3fafddb !important;
+    border: solid 1px var(--colorPrincipal) !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    font-size: 1.2em;
+    color: #353538;
+    font-weight: 100;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.bgPrincipal2 {
+    background-color: #f3fafddb !important;
+}
+.modalInputs textarea,
+.modalInputs select,
+.modalInputs input {
+    padding: 8px 15px 7px;
+    height: -webkit-fill-available;
+    font-size: 14px;
+}
+
+/* Estilos para botón de dropdown */
+.modalSelect {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 15px 7px;
+    background-color: #f3fafddb !important;
+    /* border: solid 1px var(--colorPrincipal) !important; */
+    border-radius: 4px;
+    font-size: 14px;
+    color: #353538;
+    font-weight: 100;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    min-height: 42px;
+}
+
+.modalSelect:hover {
+    border-color: var(--colorSecundario) !important;
+}
+
+.modalSelect:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(95, 95, 255, 0.2);
+}
+
+/* Estados especiales de inputs */
+.noEditable {
+    position: relative;
+}
+
+.noEditable input {
+    background: #373737;
+    border-color: #373737 !important;
+}
+
+.noEditable label {
+    color: #373737 !important;
+}
+
+.noEditable:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ====================================================================
+   8. SISTEMA DE MODALES
+   ==================================================================== */
+.modaleStyle {
+    background: #000000b2;
+    height: 100vh;
+    padding: 30px 20px;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    align-items: flex-start;
+    flex: none !important;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modaleStyle::-webkit-scrollbar {
+    display: none;
+}
+
+.modaleStyle > div {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff !important;
+}
+
+.modaleStyle > div label {
+    font-size: 13.5px;
+    font-weight: 100;
+}
+
+/* Modal específico para filtros */
+.modalFiltros .modalContent,
+.modalFiltros .fdClose {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.modalFiltros .fdClose {
+    background: var(--blackTransparent);
+    z-index: 99;
+}
+
+.modalFiltros .modalContent {
+    margin: auto;
+    z-index: 999;
+    max-width: 550px;
+    max-height: 400px;
+    height: auto;
+}
+
+/* Overlay general de modales */
+.fixed.inset-0.z-50.flex.items-center.justify-center.bg-black.bg-opacity-40 {
+    background: #00000063 !important;
+}
+
+/* ====================================================================
+   9. SISTEMA DE ICONOS Y BOTONES
+   ==================================================================== */
+/* Iconos base */
+.svgIcon {
+    color: #fff;
+    fill: #fff;
+}
+
+svg.mySVG {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 45px;
+    height: 45px;
+    pointer-events: none;
+    border-radius: 100%;
+    margin: -10px 7px -10px 0;
+    border: 3px solid #ffffff1c;
+}
+
+/* Botones con iconos */
+.bgIconTrash,
+.bgIconEdit {
+    border-radius: 5px;
+    padding: 7px;
+    transition: background-color 0.3s ease;
+}
+
+.bgIconEdit {
+    background: #00c853;
+}
+
+.bgIconTrash {
+    background: #d50000;
+}
+
+.bgIconEdit:hover,
+.bgIconTrash:hover {
+    background: var(--colorSecundario);
+}
+
+/* Botones especiales */
+.bg-green-500 {
+    --tw-bg-opacity: 1;
+    background-color: var(--colorPrincipal);
+    transition: background-color 0.3s ease;
+}
+
+.bg-green-500:hover {
+    background-color: var(--colorSecundario) !important;
+}
+
+.bg-green-500 svg {
+    position: relative;
+    top: 1px;
+}
+
+button.btnTablas {
+    position: relative;
+    bottom: -3px;
+    left: 2px;
+    border: none;
+    outline: none;
+    border-radius: 8px 8px 0 0 !important;
+    background: var(--colorPrincipal) !important;
+    transition: background-color 0.3s ease;
+}
+
+button.btnTablas:hover {
+    background: var(--colorSecundario) !important;
+}
+
+/* ====================================================================
+   10. SISTEMA DE TABLAS Y GRIDS
+   ==================================================================== */
+/* Estilos generales de tablas */
+.borderTable {
+    border-radius: 8px !important;
+    overflow: hidden;
+    border: none !important;
+}
+
+.borderTable th,
+.borderTable td {
+    border: 1px solid #ddd;
+}
+
+.bgHeadTable {
+    background: var(--colorPrincipal);
+    color: #fff;
+}
+
+.cabeRoles * {
+    color: #fff !important;
+}
+
+div#myGrid *,
+.no-border {
+    border: none !important;
+    outline: none !important;
+}
+
+/* ====================================================================
+   11. SISTEMA DE REPORTES Y DASHBOARDS
+   ==================================================================== */
+
+.rounded-lg.border.border-gray-200.bg-white\/90.shadow-sm.hover\:shadow-md.transition-all.flex.flex-col.min-h-\[110px\].pb-4 {
+    border: solid 1px var(--colorPrincipal);
+}
+
+/* ====================================================================
+   13. SISTEMA DE TOOLTIPS Y OVERLAYS
+   ==================================================================== */
+
+/* ========================
+   13.1 CONTENEDOR DE TOOLTIP
+   ======================== */
+.absolute.tooltip-container {
+    z-index: 10 !important;
+    animation: tooltipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================
+   13.2 TOOLTIP INTERACTIVO
+   ======================== */
+.absolute.w-72.p-4.mt-2.bg-white.rounded-lg.shadow-xl.border.border-gray-200.tooltip-interactive {
+    border: solid 1px var(--colorPrincipal);
+    z-index: 10 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(95, 95, 255, 0.1),
+        0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.absolute.w-72.p-4.mt-2.bg-white.rounded-lg.shadow-xl.border.border-gray-200.tooltip-interactive:hover {
+    box-shadow: 0 15px 35px rgba(95, 95, 255, 0.15),
+        0 6px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--colorSecundario);
+}
+
+/* ========================
+   13.3 DROPDOWNS Y MENÚS
+   ======================== */
+.absolute.z-50.mt-2.rounded-xl.shadow-xl.border.border-gray-200.bg-white.ltr\:origin-top-left.rtl\:origin-top-right.start-0 {
+    animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================
+   13.4 LINKS EN TOOLTIPS
+   ======================== */
+a.inline-flex.items-center.gap-1.px-2.py-1.text-xs.font-medium.text-indigo-600.hover\:text-indigo-700.hover\:bg-indigo-50.rounded.transition-colors {
+    background: var(--colorPrincipal);
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+a.inline-flex.items-center.gap-1.px-2.py-1.text-xs.font-medium.text-indigo-600.hover\:text-indigo-700.hover\:bg-indigo-50.rounded.transition-colors::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+a.inline-flex.items-center.gap-1.px-2.py-1.text-xs.font-medium.text-indigo-600.hover\:text-indigo-700.hover\:bg-indigo-50.rounded.transition-colors:hover {
+    background: var(--colorSecundario);
+    box-shadow: 0 4px 8px rgba(255, 126, 0, 0.2);
+}
+
+a.inline-flex.items-center.gap-1.px-2.py-1.text-xs.font-medium.text-indigo-600.hover\:text-indigo-700.hover\:bg-indigo-50.rounded.transition-colors:hover::before {
+    left: 100%;
+}
+
+/* ====================================================================
+   14. SISTEMA DE SCROLL Y OVERFLOW
+   ==================================================================== */
+
+/* ========================
+   14.1 SCROLLBAR GLOBAL PERSONALIZADO
+   ======================== */
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.25);
+    border-radius: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.4);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: rgba(100, 116, 139, 0.5);
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-track:hover {
+    background: rgba(100, 116, 139, 0.05);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.25) transparent;
+}
+
+/* ========================
+   14.2 OVERFLOW ESPECÍFICO
+   ======================== */
+.overflowHijo {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.2) transparent;
+    -ms-overflow-style: auto;
+}
+
+.overflowHijo::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.overflowHijo::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.2);
+    border-radius: 10px;
+}
+
+.overflowHijo::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.35);
+}
+
+/* ========================
+   14.3 SUAVIZADO DE SCROLL
+   ======================== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Para contenedores específicos con scroll suave */
+.smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ====================================================================
+   15. FILTROS Y CONTROLES
+   ==================================================================== */
+.filtros > span {
+    position: relative;
+    top: 6px;
+}
+
+.newFiltros {
+    flex-direction: column;
+}
+
+/* ====================================================================
+   16. SISTEMA DE LAYOUTS Y CONTENEDORES
+   ==================================================================== */
+.rellenoInternas,
+.relleno .rellenoInternas {
+    background: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 6px;
+}
+
+/* Bordes redondeados personalizados */
+.rounded-full {
+    border-radius: 5px;
+}
+
+.rounded-fulls {
+    border-radius: 9999px;
+}
+
+/* ====================================================================
+   17. GRADIENTES Y EFECTOS VISUALES
+   ==================================================================== */
+.from-blue-600 {
+    --tw-gradient-from: var(--colorPrincipal);
+    background: var(--colorPrincipal);
+    transition: background-color 0.3s ease;
+}
+
+.from-blue-600:hover {
+    --tw-gradient-from: var(--colorSecundario);
+    background: var(--colorSecundario);
+}
+
+.bg-gradient-to-br.from-blue-600.to-indigo-600.p-1.rounded-xl.shadow-2xl.w-full.max-w-2xl.transition-all {
+    background: #fff;
+    padding: 0;
+}
+
+/* ====================================================================
+   18. ANIMACIONES Y TRANSICIONES
+   ==================================================================== */
+/* Animación de título con fade */
+.tituloPag {
+    position: relative;
+    font-weight: 700;
+    font-size: 23px;
+    background: linear-gradient(135deg, var(--colorPrincipal) 0%, #079DED 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    opacity: 1;
+    letter-spacing: -0.02em;
+    transition: opacity 0.6s ease;
+}
+
+.tituloPag::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 120px;
+    background: linear-gradient(
+        90deg,
+        var(--colorPrincipal) 0%,
+        #079DED 50%,
+        transparent 100%
+    );
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(95, 95, 255, 0.3);
+}
+
+.tituloPag::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--colorSecundario) 0%, #fbbf24 100%);
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+/* Animaciones suaves */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.closeAnimation {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+/* ====================================================================
+   19. RESPONSIVE DESIGN
+   ==================================================================== */
+@media screen and (max-width: 992px) {
+    .width-50 {
+        width: 100% !important;
+    }
+}
+
+/* ====================================================================
+   FIN DEL ARCHIVO CSS
+   ==================================================================== */
+
+/* Oculta el icono nativo del input date hasta que recibe foco */
+.hide-date-icon::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    pointer-events: none;
+}
+.hide-date-icon::-moz-calendar-picker-indicator {
+    opacity: 0;
+    pointer-events: none;
+}
+.hide-date-icon::-ms-expand {
+    display: none;
+}
+.hide-date-icon {
+    position: relative;
+}
+
