@@ -1,0 +1,89 @@
+/* ====================================================================
+   GESTIÓN DE PROYECTOS (SCRUM) — corrección de modo oscuro
+   ====================================================================
+   Archivo NUEVO. No modifica ninguna regla previa: es una capa de
+   corrección acotada al módulo mediante la clase `.gp-scope` (en la
+   página) y `.gp-modal` (en los modales, que se teleportan al body).
+
+   POR QUÉ EXISTE
+   El módulo pinta 74 veces `dark:text-indigo-400` / `dark:text-indigo-300`
+   y 16 veces `dark:bg-indigo-500`. Esos son los índigos puros de Tailwind
+   (#079DED, #5AC2FA, #067DBE): sobre un fondo casi negro vibran y dan el
+   efecto "fosforescente". Aquí se sustituyen por los mismos tonos
+   desaturados, manteniendo el significado.
+
+   POR QUÉ ASÍ Y NO EDITANDO LAS VISTAS
+   Serían ~120 sustituciones repartidas en 40 archivos. Esta capa hace lo
+   mismo en un solo sitio, se revierte borrando el archivo, y no puede
+   afectar a ningún otro módulo porque todo cuelga de `.gp-scope`/`.gp-modal`.
+   Si se prefiere el cambio en las plantillas, es un reemplazo mecánico.
+
+   Los selectores `[class~="..."]` apuntan al nombre literal de la clase
+   que Tailwind emite en el HTML, así que solo tocan lo que ya iba pintado
+   de ese color — nunca añaden color donde no lo había.
+   ==================================================================== */
+
+.dark .gp-scope [class~="dark:text-indigo-400"],
+.dark .gp-modal [class~="dark:text-indigo-400"] {
+    color: #9494c2;
+}
+
+.dark .gp-scope [class~="dark:text-indigo-300"],
+.dark .gp-modal [class~="dark:text-indigo-300"] {
+    color: #adadcc;
+}
+
+.dark .gp-scope [class~="dark:text-violet-300"],
+.dark .gp-modal [class~="dark:text-violet-300"] {
+    color: #b2a8c6;
+}
+.dark .gp-scope [class~="dark:text-violet-400"],
+.dark .gp-modal [class~="dark:text-violet-400"] {
+    color: #a196bb;
+}
+.dark .gp-scope [class~="dark:text-purple-400"],
+.dark .gp-modal [class~="dark:text-purple-400"] {
+    color: #a196bb;
+}
+
+/* Verdes y rosas: mismo problema, menos frecuente. */
+.dark .gp-scope [class~="dark:text-emerald-300"],
+.dark .gp-modal [class~="dark:text-emerald-300"] {
+    color: #84b3a2;
+}
+.dark .gp-scope [class~="dark:text-emerald-400"],
+.dark .gp-modal [class~="dark:text-emerald-400"] {
+    color: #6fa895;
+}
+.dark .gp-scope [class~="dark:text-rose-300"],
+.dark .gp-modal [class~="dark:text-rose-300"] {
+    color: #c99d9d;
+}
+
+/* Rellenos sólidos: eran los más ruidosos, un bloque de color puro. */
+.dark .gp-scope [class~="dark:bg-indigo-500"],
+.dark .gp-modal [class~="dark:bg-indigo-500"] {
+    background-color: #4a4a70;
+}
+.dark .gp-scope [class~="dark:bg-violet-500"],
+.dark .gp-modal [class~="dark:bg-violet-500"] {
+    background-color: #544a72;
+}
+.dark .gp-scope [class~="dark:bg-emerald-500"],
+.dark .gp-modal [class~="dark:bg-emerald-500"] {
+    background-color: #3f6b5c;
+}
+
+/* Bordes: se apagan para que no dibujen líneas de neón. */
+.dark .gp-scope [class~="dark:border-indigo-400"],
+.dark .gp-modal [class~="dark:border-indigo-400"] {
+    border-color: #63637f;
+}
+.dark .gp-scope [class~="dark:border-indigo-500"],
+.dark .gp-modal [class~="dark:border-indigo-500"] {
+    border-color: #565676;
+}
+.dark .gp-scope [class~="dark:border-indigo-600"],
+.dark .gp-modal [class~="dark:border-indigo-600"] {
+    border-color: #4a4a68;
+}
