@@ -6,6 +6,7 @@ use Modules\GestionProyectos\Http\Controllers\GpTeamController;
 use Modules\GestionProyectos\Http\Controllers\GpSpaceMemberController;
 use Modules\GestionProyectos\Http\Controllers\MailProvidersController;
 use Modules\GestionProyectos\Http\Controllers\ApiTokenController;
+use Modules\GestionProyectos\Http\Controllers\ChatIAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,13 @@ Route::middleware(['web', 'auth'])
     ->prefix('gestion-proyectos')
     ->name('gestion-proyectos.')
     ->group(function () {
+
+        // ── Asistente conversacional con IA (Gemini) — Cap. 3 de la tesis ────────
+        // Disponible para CUALQUIER usuario autenticado, sin gate de permiso de
+        // módulo: es una herramienta de apoyo personal, no una operación sobre
+        // el espacio/proyecto.
+        Route::get('/chat-ia', [ChatIAController::class, 'index'])->name('chat-ia.index');
+        Route::post('/chat-ia', [ChatIAController::class, 'store'])->name('chat-ia.store');
 
         Route::middleware('can:gestion-proyectos.ver')
             ->get('/', [GestionProyectosController::class, 'index'])
