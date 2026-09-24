@@ -275,6 +275,20 @@ class GestionProyectosController extends Controller
 
         $data = $request->validated();
 
+        // Tester: el gate 'crear' lo deja pasar solo para registrar bugs. Si no tiene
+        // escritura completa del espacio, exigimos que el tipo de tarea sea "Error".
+        $actor = $request->user();
+        $tienePermisoCompleto = $actor->hasRole(['admin', 'super-admin', 'super_admin'])
+            || $actor->can('gestion-proyectos.admin')
+            || \Modules\GestionProyectos\Models\GpSpaceMember::canWrite($actor->id, $data['project_key']);
+
+        if (!$tienePermisoCompleto && ($data['issue_type'] ?? null) !== 'Error') {
+            return redirect()
+                ->back()
+                ->withErrors(['error' => 'Como Tester, solo puedes registrar bugs (tipo "Error").'])
+                ->withInput();
+        }
+
         // Resolver account_id (string) → user_id (int)
         $data['assignee_id'] = $this->resolveUserId($data['assignee_account_id'] ?? null);
         $data['creator_id']  = $request->user()->id;
@@ -1305,7 +1319,8 @@ class GestionProyectosController extends Controller
     public function storeActivityHistory(Request $request, string $key): JsonResponse
     {
         $proyecto = Proyecto::where('key', $key)->firstOrFail();
-        $this->authorize('registrarHistorial', $proyecto->project);
+        // Desarrollador/Diseñador/Tester pueden comentar solo si la tarea es suya.
+        $this->authorize('comentarPropia', $proyecto);
 
         $validated = $request->validate([
             'comment'      => ['required', 'string', 'max:5000'],

@@ -63,3 +63,7 @@ AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 
 VITE_APP_NAME="${APP_NAME}"
+
+# Asistente conversacional (Gemini) - Cap. 3 tesis
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-2.0-flash

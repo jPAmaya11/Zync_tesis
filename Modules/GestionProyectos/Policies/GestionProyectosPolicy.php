@@ -19,11 +19,16 @@ class GestionProyectosPolicy
         return $user->hasPermissionTo('gestion-proyectos.ver') || $this->isAdmin($user);
     }
 
-    /** Permiso para crear tareas en un proyecto específico. */
+    /**
+     * Permiso para crear tareas en un proyecto específico.
+     * Excepción: el Tester puede pasar este gate para registrar bugs — el controlador
+     * exige que el issue_type sea "Error" en ese caso (no puede crear otros tipos).
+     */
     public function crear(User $user, string $projectKey): bool
     {
         if ($this->isAdmin($user)) return true;
-        return GpSpaceMember::canWrite($user->id, $projectKey);
+        if (GpSpaceMember::canWrite($user->id, $projectKey)) return true;
+        return GpSpaceMember::canRegisterBug($user->id, $projectKey);
     }
 
     /**
@@ -38,13 +43,39 @@ class GestionProyectosPolicy
         return GpSpaceMember::canApprove($user->id, $projectKey);
     }
 
-    /** Permiso para editar una tarea específica (model-based). */
+    /**
+     * Permiso para editar una tarea específica (model-based).
+     * Desarrollador/Diseñador/Tester también pasan el gate SOLO si la tarea está
+     * asignada a ellos — ProyectoService::update restringe los campos editables a
+     * únicamente 'status' en ese caso (no pueden tocar el resto de los datos).
+     */
     public function update(User $user, Proyecto $proyecto): bool
     {
         if ($this->isAdmin($user)) return true;
         if (GpSpaceMember::canWrite($user->id, $proyecto->project)) return true;
         // Aprobador puede pasar el gate — ProyectoService restringe a solo status crítico
-        return GpSpaceMember::canApprove($user->id, $proyecto->project);
+        if (GpSpaceMember::canApprove($user->id, $proyecto->project)) return true;
+
+        if (
+            GpSpaceMember::isRestrictedWorker($user->id, $proyecto->project)
+            && (int) $proyecto->assignee_id === (int) $user->id
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Permiso para comentar (registrar historial) en una tarea específica.
+     * Desarrollador/Diseñador/Tester pueden comentar SOLO en sus propias tareas asignadas.
+     */
+    public function comentarPropia(User $user, Proyecto $proyecto): bool
+    {
+        if ($this->registrarHistorial($user, $proyecto->project)) return true;
+
+        return GpSpaceMember::isRestrictedWorker($user->id, $proyecto->project)
+            && (int) $proyecto->assignee_id === (int) $user->id;
     }
 
     /**

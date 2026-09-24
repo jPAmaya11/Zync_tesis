@@ -416,9 +416,11 @@ function handleCreateSubactividad(parentKey) {
 // "Equipo" del modal de Crear Tarea.
 // ─────────────────────────────────────────────────────────────────────────────
 // Permiso SCRUM: ¿puede el usuario actual aprobar (mover a Finalizado/Reprogramado)?
+// Solo el nivel "Jefe de Proyecto" (administrador/propietario) aprueba transiciones
+// críticas — Desarrollador/Diseñador/Tester no aprueban (tabla de roles de la tesis).
 const canApproveInSpace = computed(
     () =>
-        ['propietario', 'administrador', 'aprobador', 'implementador'].includes(
+        ['propietario', 'administrador'].includes(
             props.spaceMemberRole
         ) ||
         page.props.auth?.user?.roles?.some(
@@ -439,12 +441,14 @@ const canEditSpace = computed(() => {
     return props.spaceMemberRole === 'propietario';
 });
 
-// Edición inline (PATCH) de DATOS: Propietario + Administrador + Implementador
-// (o admin global). Ejecutor, aprobador y lector NO editan datos inline.
+// Edición inline (PATCH) de DATOS: Propietario + Administrador ("Jefe de Proyecto")
+// (o admin global). Desarrollador, Diseñador, Tester y lector NO editan datos inline
+// libremente (tabla de roles de la tesis: solo ven/actualizan estado de sus propias
+// tareas, lo cual se maneja aparte, no como edición inline general).
 const canInlineEdit = computed(() => {
     if (page.props.auth?.user?.roles?.some(r => r === 'admin' || r.name === 'admin' || r === 'super-admin' || r.name === 'super-admin' || r === 'super_admin' || r.name === 'super_admin')) return true;
     if (page.props.can?.['gestion-proyectos.admin']) return true;
-    return ['propietario', 'administrador', 'implementador'].includes(props.spaceMemberRole);
+    return ['propietario', 'administrador'].includes(props.spaceMemberRole);
 });
 
 // Admin global puro (sin contar propietario de espacio). Sólo este perfil ve el panel de Mail.

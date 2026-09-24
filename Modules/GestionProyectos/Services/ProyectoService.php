@@ -226,6 +226,26 @@ class ProyectoService implements ProyectoServiceInterface
             }
         }
 
+        // 1c. Desarrollador/Diseñador/Tester (rol "trabajador" restringido) en SU PROPIA
+        // tarea asignada: solo pueden cambiar el campo 'status' (actualizar el estado de
+        // su tarea). No editan ningún otro dato. El paso a un estado CRÍTICO (Finalizado/
+        // Reprogramado) sigue bloqueado más abajo porque no están en APPROVER_ROLES.
+        $isRestrictedWorkerOwnTask = !$actor->hasRole(['admin', 'super-admin', 'super_admin'])
+            && !$actor->can('gestion-proyectos.admin')
+            && !\Modules\GestionProyectos\Models\GpSpaceMember::canWrite($actor->id, $proyecto->project)
+            && !\Modules\GestionProyectos\Models\GpSpaceMember::canApprove($actor->id, $proyecto->project)
+            && \Modules\GestionProyectos\Models\GpSpaceMember::isRestrictedWorker($actor->id, $proyecto->project)
+            && (int) $proyecto->assignee_id === (int) $actor->id;
+
+        if ($isRestrictedWorkerOwnTask) {
+            $extraKeys = array_diff(array_keys($fields), ['status']);
+            if (!empty($extraKeys) || !isset($fields['status'])) {
+                throw new GestionProyectosException(
+                    'Solo puedes actualizar el estado de tus propias tareas asignadas. No puedes editar otros campos.'
+                );
+            }
+        }
+
         // 2. Validar transiciones críticas (Blueprint §2.4)
         if (isset($fields['status'])) {
             // El estado debe pertenecer al CATÁLOGO SCRUM: no se pueden crear estados nuevos.

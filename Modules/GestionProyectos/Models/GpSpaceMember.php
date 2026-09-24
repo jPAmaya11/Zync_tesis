@@ -9,7 +9,18 @@ use Modules\User\Models\User;
 /**
  * Miembro de un espacio con su rol — Blueprint §2.1
  *
- * Roles: propietario | administrador | ejecutor | aprobador | lector
+ * Roles (alineados a la matriz de permisos de la tesis):
+ *   propietario   → dueño del espacio (asignado automáticamente al crearlo)
+ *   administrador → "Jefe de Proyecto": control total del espacio
+ *   desarrollador → trabajador restringido: solo sus tareas asignadas
+ *   disenador     → trabajador restringido: solo sus tareas asignadas
+ *   tester        → trabajador restringido + puede registrar bugs (tipo "Error")
+ *   lector        → solo lectura
+ *
+ * Nota histórica: 'ejecutor', 'aprobador' e 'implementador' fueron los roles usados
+ * antes de alinear el módulo a la tabla de roles/permisos de la tesis. La migración
+ * 2026_09_15_000001_rename_gp_space_member_roles_to_thesis_roles los reescribe a
+ * desarrollador/tester/disenador respectivamente.
  */
 class GpSpaceMember extends Model
 {
@@ -28,13 +39,17 @@ class GpSpaceMember extends Model
         'suspended'   => 'boolean',
     ];
 
-    // ─── Roles que pueden mover a Finalizado / Reprogramado (§2.4) ─────────
-    // Implementador = ejecutor + aprobador: también puede aprobar estados críticos.
-    public const APPROVER_ROLES = ['propietario', 'administrador', 'aprobador', 'implementador'];
+    // ─── Roles "trabajador" restringidos por la tabla de la tesis: solo ven,
+    //     actualizan el estado y comentan SUS PROPIAS tareas asignadas. No crean,
+    //     editan, eliminan ni asignan tareas, y no aprueban transiciones críticas. ──
+    public const RESTRICTED_WORKER_ROLES = ['desarrollador', 'disenador', 'tester'];
 
-    // ─── Roles que pueden crear/editar tareas (escritura) ──────────────────
-    // Implementador escribe igual que el ejecutor.
-    public const WRITE_ROLES = ['propietario', 'administrador', 'ejecutor', 'implementador'];
+    // ─── Roles que pueden mover a Finalizado / Reprogramado (§2.4) ─────────
+    // Solo el nivel "Jefe de Proyecto" aprueba transiciones críticas.
+    public const APPROVER_ROLES = ['propietario', 'administrador'];
+
+    // ─── Roles que pueden crear/editar/eliminar/asignar tareas (escritura) ─
+    public const WRITE_ROLES = ['propietario', 'administrador'];
 
     // ─── Relaciones ─────────────────────────────────────────────────────────
 
@@ -131,7 +146,25 @@ class GpSpaceMember extends Model
 
         if (self::isOwner($userId, $projectKey)) return true;
 
-        return in_array(self::roleInSpace($userId, $projectKey), ['administrador', 'implementador'], true);
+        return self::roleInSpace($userId, $projectKey) === 'administrador';
+    }
+
+    /**
+     * ¿Es un rol "trabajador" restringido (Desarrollador/Diseñador/Tester)? Estos roles
+     * solo pueden ver, actualizar el estado y comentar en SUS PROPIAS tareas asignadas.
+     */
+    public static function isRestrictedWorker(int $userId, string $projectKey): bool
+    {
+        return in_array(self::roleInSpace($userId, $projectKey), self::RESTRICTED_WORKER_ROLES, true);
+    }
+
+    /**
+     * ¿Puede el usuario registrar bugs (crear tareas de tipo "Error")?
+     * Solo el rol Tester (los roles con escritura completa ya pueden crear cualquier tipo).
+     */
+    public static function canRegisterBug(int $userId, string $projectKey): bool
+    {
+        return self::roleInSpace($userId, $projectKey) === 'tester';
     }
 
     /**
@@ -198,7 +231,11 @@ class GpSpaceMember extends Model
     {
         return match ($this->role) {
             'propietario'   => 'Propietario',
-            'administrador' => 'Administrador',
+            'administrador' => 'Jefe de Proyecto',
+            'desarrollador' => 'Desarrollador',
+            'disenador'     => 'Diseñador',
+            'tester'        => 'Tester',
+            // Legado (antes de alinear con la tabla de roles de la tesis).
             'ejecutor'      => 'Ejecutor',
             'aprobador'     => 'Aprobador',
             'implementador' => 'Implementador',

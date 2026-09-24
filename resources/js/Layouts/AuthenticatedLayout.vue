@@ -12,6 +12,7 @@ import DropdownLink from '@/Components/Navigation/DropdownLink.vue';
 import NavLink from '@/Components/Navigation/NavLink.vue';
 import DataTool from '@/Components/Utilities/DataTool.vue';
 import SweetAlert from '@/Components/Utilities/SweetAlert.vue';
+import ChatIAWidget from '@/Components/Modules/GestionProyectos/ChatIAWidget.vue';
 import { useDarkMode } from '@/Composables/useDarkMode';
 import { Link, usePage } from '@inertiajs/vue3';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue';
@@ -602,6 +603,9 @@ const mobileSidebarOpen = computed(() => ui.value.mobileSidebarOpen);
 
         <!-- SweetAlert Component - Global -->
         <SweetAlert />
+
+        <!-- Asistente conversacional con IA (Gemini) - Cap. 3 de la tesis -->
+        <ChatIAWidget />
     </div>
 </template>
 

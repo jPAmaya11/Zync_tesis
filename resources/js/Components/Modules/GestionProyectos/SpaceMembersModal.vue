@@ -219,13 +219,13 @@ const search = ref('');
 const selectedId = ref(null);
 const showForm = ref(false);
 const saving = ref(false);
-const form = ref({ user_id: null, role: 'ejecutor' });
+const form = ref({ user_id: null, role: 'desarrollador' });
 
 const roles = [
-    { id: 'administrador', name: 'Administrador', description: 'Gestión total de tareas, equipos y miembros, puede eliminar miembros, y tareas dentro de su espacio.' },
-    { id: 'ejecutor', name: 'Ejecutor', description: 'Crea y edita tareas dentro de su espacio.' },
-    { id: 'aprobador', name: 'Aprobador', description: 'Auditador. Solo tiene permiso para aprobar estados finales (Finalizado, Reprogramado).' },
-    { id: 'implementador', name: 'Implementador', description: 'Ejecutor + Aprobador: crea y edita tareas Y aprueba estados finales. No gestiona el espacio.' },
+    { id: 'administrador', name: 'Jefe de Proyecto', description: 'Gestión total: crea, edita, elimina y asigna tareas; asigna miembros; ve todas las tareas y reportes del espacio; usa el asistente conversacional.' },
+    { id: 'desarrollador', name: 'Desarrollador', description: 'Ve sus tareas asignadas, actualiza su estado y comenta. No crea, edita, elimina ni asigna tareas.' },
+    { id: 'disenador', name: 'Diseñador', description: 'Ve sus tareas asignadas, actualiza su estado y comenta. No crea, edita, elimina ni asigna tareas.' },
+    { id: 'tester', name: 'Tester', description: 'Ve sus tareas asignadas, actualiza su estado y comenta. Además puede registrar bugs (tareas de tipo "Error").' },
     { id: 'lector', name: 'Lector', description: 'Solo puede ver las tareas del espacio. Sin permisos de escritura ni aprobación.' },
 ];
 
@@ -363,6 +363,10 @@ function getRoleStyle(role) {
     switch (role) {
         case 'propietario': return 'bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800';
         case 'administrador': return 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-800';
+        case 'tester': return 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800';
+        case 'desarrollador': return 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800';
+        case 'disenador': return 'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800';
+        // Legado (roles previos al alineamiento con la tesis, por si quedara data vieja).
         case 'aprobador': return 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800';
         case 'ejecutor': return 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800';
         case 'implementador': return 'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800';
