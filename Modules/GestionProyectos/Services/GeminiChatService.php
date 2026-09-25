@@ -96,7 +96,10 @@ class GeminiChatService
             'parts' => [['functionCall' => ['name' => $nombreFuncion, 'args' => $argumentos]]],
         ];
         $contents[] = [
-            'role' => 'function',
+            // Esta versión de la API de Gemini rechaza el rol "function" para
+            // devolver el resultado (error 400: "Role 'function' is not
+            // supported"); exige "user" para ese turno.
+            'role' => 'user',
             'parts' => [[
                 'functionResponse' => [
                     'name' => $nombreFuncion,
