@@ -88,12 +88,21 @@ class GeminiChatService
         // resultado para que redacte la confirmación final en lenguaje natural.
         $nombreFuncion = (string) data_get($functionCall, 'name');
         $argumentos = (array) data_get($functionCall, 'args', []);
+        // Los modelos "thinking" (como gemini-3.x) devuelven una firma junto a la
+        // llamada a función; hay que reenviarla tal cual al responderle, o rechaza
+        // la petición con "Function call is missing a thought_signature" (400).
+        $thoughtSignature = data_get($parte, 'thoughtSignature');
 
         $resultado = $this->ejecutarAccion($usuario, $nombreFuncion, $argumentos);
 
+        $parteFunctionCall = ['functionCall' => ['name' => $nombreFuncion, 'args' => $argumentos]];
+        if ($thoughtSignature) {
+            $parteFunctionCall['thoughtSignature'] = $thoughtSignature;
+        }
+
         $contents[] = [
             'role' => 'model',
-            'parts' => [['functionCall' => ['name' => $nombreFuncion, 'args' => $argumentos]]],
+            'parts' => [$parteFunctionCall],
         ];
         $contents[] = [
             // Esta versión de la API de Gemini rechaza el rol "function" para
