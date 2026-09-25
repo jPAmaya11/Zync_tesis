@@ -134,7 +134,7 @@ class GeminiChatService
 
         $url = sprintf(self::ENDPOINT, $this->model);
 
-        $response = Http::timeout(30)
+        $response = Http::timeout(60)
             ->withHeaders(['x-goog-api-key' => $this->apiKey])
             ->post($url, $payload);
 
