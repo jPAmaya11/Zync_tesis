@@ -45,7 +45,7 @@ class ChatIAController extends Controller
         $gemini = GeminiChatService::make();
 
         try {
-            $respuesta = $gemini->preguntar($usuario, $data['mensaje']);
+            $resultado = $gemini->preguntar($usuario, $data['mensaje']);
         } catch (Throwable $e) {
             return response()->json([
                 'message' => $e->getMessage(),
@@ -55,9 +55,9 @@ class ChatIAController extends Controller
         $turno = ChatIA::create([
             'id_usuario' => $usuario->id,
             'mensaje' => $data['mensaje'],
-            'respuesta' => $respuesta,
+            'respuesta' => $resultado['texto'],
             'fecha_creacion' => now(),
-            'tipo' => 'consulta',
+            'tipo' => $resultado['accion'] ? 'accion:' . $resultado['accion'] : 'consulta',
         ]);
 
         return response()->json(['turno' => $turno]);
