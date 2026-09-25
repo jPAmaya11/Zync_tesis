@@ -33,7 +33,7 @@ class GeminiChatService
 
     public function __construct(
         private readonly ?string $apiKey = null,
-        private readonly string $model = 'gemini-2.0-flash',
+        private readonly string $model = 'gemini-3.8-flash',
     ) {
     }
 
@@ -41,7 +41,7 @@ class GeminiChatService
     {
         return new self(
             config('services.gemini.api_key'),
-            config('services.gemini.model', 'gemini-2.0-flash'),
+            config('services.gemini.model', 'gemini-3.8-flash'),
         );
     }
 
