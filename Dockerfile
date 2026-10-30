@@ -7,7 +7,7 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev --no-scripts
 
 # ---- Etapa 2: build del frontend (Vue + Vite) ----
-FROM node:20-alpine AS frontend
+FROM node:20 AS frontend
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
