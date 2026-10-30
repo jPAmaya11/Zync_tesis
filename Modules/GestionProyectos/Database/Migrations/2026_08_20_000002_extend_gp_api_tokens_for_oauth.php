@@ -72,11 +72,13 @@ return new class extends Migration
 
         // Índice de apoyo para el listado de sesiones del usuario.
         if (Schema::hasColumn('gp_api_tokens', 'revoked_at')) {
-            $indexes = collect(DB::select('SHOW INDEX FROM gp_api_tokens'))
-                ->pluck('Key_name')
-                ->unique();
+            // Schema::getIndexes() es agnóstico de motor (MySQL/Postgres/SQLite) desde Laravel 11,
+            // a diferencia de "SHOW INDEX FROM ...", que es sintaxis exclusiva de MySQL.
+            $indexExists = collect(Schema::getIndexes('gp_api_tokens'))
+                ->pluck('name')
+                ->contains('gp_api_tokens_user_id_revoked_at_index');
 
-            if (! $indexes->contains('gp_api_tokens_user_id_revoked_at_index')) {
+            if (! $indexExists) {
                 Schema::table('gp_api_tokens', function (Blueprint $table) {
                     $table->index(['user_id', 'revoked_at']);
                 });
