@@ -29,7 +29,7 @@ return new class extends Migration
         // Defensivo: si quedara alguna sin created_at, usar la fecha de hoy.
         DB::table('gp_proyectos')
             ->whereNull('start_date')
-            ->update(['start_date' => DB::raw('CURDATE()')]);
+            ->update(['start_date' => DB::raw('CURRENT_DATE')]);
 
         // Fecha Inicio obligatoria.
         Schema::table('gp_proyectos', function (Blueprint $table) {

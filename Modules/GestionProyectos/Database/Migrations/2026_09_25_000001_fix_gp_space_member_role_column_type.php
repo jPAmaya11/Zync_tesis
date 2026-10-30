@@ -22,6 +22,15 @@ return new class extends Migration
     // doctrine/dbal, que no está instalado en este proyecto.
     public function up(): void
     {
+        if (DB::getDriverName() === 'pgsql') {
+            // La migración 2026_06_09_000030 ya eliminó el CHECK constraint en Postgres;
+            // aquí solo ajustamos tipo/tamaño y el default.
+            DB::statement('ALTER TABLE gp_space_members ALTER COLUMN role TYPE VARCHAR(30)');
+            DB::statement("ALTER TABLE gp_space_members ALTER COLUMN role SET DEFAULT 'desarrollador'");
+
+            return;
+        }
+
         DB::statement(
             "ALTER TABLE gp_space_members MODIFY role VARCHAR(30) NOT NULL DEFAULT 'desarrollador'"
         );
@@ -29,6 +38,11 @@ return new class extends Migration
 
     public function down(): void
     {
+        if (DB::getDriverName() === 'pgsql') {
+            // No se reconstruye el CHECK constraint original en Postgres (ver 2026_06_09_000030).
+            return;
+        }
+
         DB::statement(
             "ALTER TABLE gp_space_members MODIFY role "
             . "ENUM('propietario','administrador','ejecutor','aprobador','lector','implementador') "

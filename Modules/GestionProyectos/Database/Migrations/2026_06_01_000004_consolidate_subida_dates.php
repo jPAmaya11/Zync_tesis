@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\DB;
  *
  * Los IDs de los custom se resuelven POR NOMBRE para que funcione igual en prod.
  * Reversible (down → reactiva los custom; los valores copiados a las nativas quedan).
+ *
+ * Nota: se usa el query builder (en vez de un UPDATE...JOIN con REGEXP, sintaxis
+ * exclusiva de MySQL) para que funcione igual en MySQL y en PostgreSQL.
  */
 return new class extends Migration
 {
@@ -29,29 +32,13 @@ return new class extends Migration
         // Subida Stage  → fecha_entrega
         $stageId = DB::table('gp_custom_fields')->whereIn('name', $this->stageNames)->value('id');
         if ($stageId) {
-            DB::statement(
-                "UPDATE gp_proyectos p
-                 JOIN gp_custom_field_values v ON v.proyecto_id = p.id AND v.custom_field_id = ?
-                 SET p.fecha_entrega = v.value
-                 WHERE p.fecha_entrega IS NULL
-                   AND v.value IS NOT NULL AND v.value <> ''
-                   AND v.value REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}'",
-                [$stageId]
-            );
+            $this->copyCustomFieldToNative($stageId, 'fecha_entrega');
         }
 
         // Subida Producción → fecha_aprobacion
         $prodId = DB::table('gp_custom_fields')->whereIn('name', $this->prodNames)->value('id');
         if ($prodId) {
-            DB::statement(
-                "UPDATE gp_proyectos p
-                 JOIN gp_custom_field_values v ON v.proyecto_id = p.id AND v.custom_field_id = ?
-                 SET p.fecha_aprobacion = v.value
-                 WHERE p.fecha_aprobacion IS NULL
-                   AND v.value IS NOT NULL AND v.value <> ''
-                   AND v.value REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}'",
-                [$prodId]
-            );
+            $this->copyCustomFieldToNative($prodId, 'fecha_aprobacion');
         }
 
         // Desactivar los custom duplicados (sin borrar sus valores).
@@ -65,5 +52,31 @@ return new class extends Migration
         DB::table('gp_custom_fields')
             ->whereIn('name', array_merge($this->stageNames, $this->prodNames))
             ->update(['active' => true, 'updated_at' => now()]);
+    }
+
+    /**
+     * Copia value de gp_custom_field_values → la columna nativa indicada en
+     * gp_proyectos, solo donde la nativa esté vacía y el value tenga pinta de
+     * fecha ISO (YYYY-MM-DD...). Portable entre MySQL y PostgreSQL.
+     */
+    private function copyCustomFieldToNative(int $customFieldId, string $nativeColumn): void
+    {
+        DB::table('gp_custom_field_values')
+            ->where('custom_field_id', $customFieldId)
+            ->whereNotNull('value')
+            ->where('value', '<>', '')
+            ->orderBy('id')
+            ->chunkById(200, function ($rows) use ($nativeColumn) {
+                foreach ($rows as $row) {
+                    if (!preg_match('/^\d{4}-\d{2}-\d{2}/', (string) $row->value)) {
+                        continue;
+                    }
+
+                    DB::table('gp_proyectos')
+                        ->where('id', $row->proyecto_id)
+                        ->whereNull($nativeColumn)
+                        ->update([$nativeColumn => $row->value]);
+                }
+            });
     }
 };
