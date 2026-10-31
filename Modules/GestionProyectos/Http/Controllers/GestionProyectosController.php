@@ -699,12 +699,16 @@ class GestionProyectosController extends Controller
         // completo del usuario y se ordenaba/paginaba en PHP: degradaba linealmente con
         // miles de asignaciones y cada "Cargar más" repetía el costo entero).
 
+        // Identificador de columna `key`/"key" según el driver: backticks (MySQL) son
+        // un error de sintaxis en PostgreSQL, que usa comillas dobles para identificadores.
+        $keyCol = DB::getDriverName() === 'pgsql' ? '"key"' : '`key`';
+
         // Rama A: actividades / subactividades / versiones -Rn asignadas a mí.
         // La fecha efectiva es COALESCE(fecha_reprogramacion, fecha_limite) (criterio SLA).
         $proyectos = DB::table('gp_proyectos')
             ->where('assignee_id', $userId)
             ->whereNull('deleted_at')
-            ->selectRaw("`key`, summary AS title, status, priority, project, parent_key,
+            ->selectRaw("{$keyCol}, summary AS title, status, priority, project, parent_key,
                          reprogramacion_root_key, creator_id,
                          DATE(COALESCE(fecha_reprogramacion, fecha_limite)) AS due_date,
                          'p' AS src");
@@ -715,7 +719,7 @@ class GestionProyectosController extends Controller
             ->join('gp_proyectos AS p', fn ($j) => $j->on('p.key', '=', 't.parent_key')->whereNull('p.deleted_at'))
             ->where('t.assignee_id', $userId)
             ->whereNull('t.deleted_at')
-            ->selectRaw("t.`key`, t.summary AS title, t.status, t.priority, p.project, t.parent_key,
+            ->selectRaw("t.{$keyCol}, t.summary AS title, t.status, t.priority, p.project, t.parent_key,
                          NULL AS reprogramacion_root_key, t.creator_id,
                          NULL AS due_date,
                          't' AS src");

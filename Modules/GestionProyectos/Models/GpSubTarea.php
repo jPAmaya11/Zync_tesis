@@ -70,7 +70,11 @@ class GpSubTarea extends Model
                 $lastNum = static::withTrashed()
                     ->where('parent_key', $model->parent_key)
                     ->lockForUpdate()
-                    ->max(DB::raw('CAST(SUBSTRING_INDEX(`key`, \'-\', -1) AS UNSIGNED)'));
+                    ->max(DB::raw(
+                        DB::getDriverName() === 'pgsql'
+                            ? "CAST(regexp_replace(\"key\", '^.*-', '') AS INTEGER)"
+                            : "CAST(SUBSTRING_INDEX(`key`, '-', -1) AS UNSIGNED)"
+                    ));
 
                 $model->key = $model->parent_key . '-' . (($lastNum ?? 0) + 1);
             }

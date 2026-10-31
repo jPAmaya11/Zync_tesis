@@ -178,7 +178,11 @@ class Proyecto extends Model
                     $lastNum = static::withTrashed()
                         ->where('parent_key', $model->parent_key)
                         ->where('key', 'like', $model->parent_key . '-S%')
-                        ->max(DB::raw("CAST(SUBSTRING_INDEX(`key`, '-S', -1) AS UNSIGNED)"));
+                        ->max(DB::raw(
+                            DB::getDriverName() === 'pgsql'
+                                ? "CAST(regexp_replace(\"key\", '^.*-S', '') AS INTEGER)"
+                                : "CAST(SUBSTRING_INDEX(`key`, '-S', -1) AS UNSIGNED)"
+                        ));
                     $model->key = $model->parent_key . '-S' . (($lastNum ?? 0) + 1);
                 } else {
                     // Actividad top-level: secuencia por espacio (solo top-level).
@@ -192,7 +196,11 @@ class Proyecto extends Model
                         ->where('project', $model->project)
                         ->whereNull('parent_key')
                         ->whereNull('reprogramacion_root_key')
-                        ->max(DB::raw('CAST(SUBSTRING_INDEX(`key`, \'-\', -1) AS UNSIGNED)'));
+                        ->max(DB::raw(
+                            DB::getDriverName() === 'pgsql'
+                                ? "CAST(regexp_replace(\"key\", '^.*-', '') AS INTEGER)"
+                                : "CAST(SUBSTRING_INDEX(`key`, '-', -1) AS UNSIGNED)"
+                        ));
                     $model->key = $prefix . '-' . str_pad(($lastNum ?? 0) + 1, 4, '0', STR_PAD_LEFT);
                 }
             }
